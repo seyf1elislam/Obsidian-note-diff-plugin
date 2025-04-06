@@ -16,10 +16,11 @@ export class DiffModal extends Modal {
 	async onOpen() {
 		const { contentEl } = this;
 		contentEl.empty(); // Clear previous content
+		this.modalEl.addClass("diff-modal");
 
-		// Adjust title based on whether file2 is already known
-		const title = `Comparing: ${this.file1.basename} vs ${this.file2?.basename}`;
-		contentEl.createEl("h2", { text: title });
+		contentEl.createEl("h3", {
+			text: `Comparing: ${this.file1.basename} vs ${this.file2?.basename}`,
+		});
 
 		contentEl.createEl("p", {
 			text: `Comparing ${this.file1.path} and ${this.file2?.path}`,
@@ -104,9 +105,10 @@ export class DiffModal extends Modal {
 				if (part.added) prefix = "+ ";
 				if (part.removed) prefix = "- ";
 				lineSpan.textContent = prefix + line;
-				if (index < lines.length - 1 || part.value.endsWith("\n")) {
-					lineSpan.createEl("br");
-				}
+				// if (index < lines.length - 1 || part.value.endsWith("\n")) {
+				// 	lineSpan.createEl("br");
+				// }
+				lineSpan.createEl("br");
 			});
 		});
 

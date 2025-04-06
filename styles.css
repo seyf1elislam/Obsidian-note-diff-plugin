@@ -1,58 +1,48 @@
+.diff-modal {
+	width: 70vw;
+}
+@media screen and (max-width: 750px) {
+	.diff-modal {
+		width: 95vw;
+	}
+}
+
 /* Styles for the diff results in the modal */
 .diff-results {
 	margin-top: 20px;
 	padding: 15px;
-	background-color: var(
-		--background-secondary
-	); /* Use Obsidian's theme colors */
+	background-color: var(--background-secondary);
 	border-radius: 5px;
-	max-height: 60vh; /* Limit height and make scrollable */
+	/* max-height: 70vh; Limit height and make scrollable */
+	max-height: 70%; /* Adjust based on your layout */
 	overflow-y: auto;
 	font-family: monospace; /* Use monospace for alignment */
-	font-size: 0.9em;
+	font-size: 1em;
 	white-space: pre-wrap; /* Wrap long lines but preserve whitespace */
 	line-height: 1.4;
 }
+/*  Colorize odd children */
+/* .diff-results :nth-child(even) {
+	background-color: var(--background-primary);
+	width: 100%;
+	display: block;
+} */
 
 /* Style for added lines */
 .diff-added {
 	color: var(--color-green); /* Use Obsidian's green */
-	background-color: rgba(0, 255, 0, 0.1); /* Optional subtle background */
+	/*background-color: rgba(0, 255, 0, 0.1); /* Optional subtle background */
 }
 
 /* Style for removed lines */
 .diff-removed {
 	color: var(--color-red); /* Use Obsidian's red */
-	background-color: rgba(255, 0, 0, 0.1); /* Optional subtle background */
-	text-decoration: line-through; /* Optional: strike-through */
+	/*background-color: rgba(255, 0, 0, 0.1); /* Optional subtle background */
+	/*text-decoration: line-through; /* Optional: strike-through */
 }
 
 /* Style for unchanged lines (optional, mostly for consistency) */
 .diff-unchanged {
-	color: var(--text-normal); /* Default text color */
-	opacity: 0.8; /* Slightly fade out unchanged lines */
-}
-
-/* Style for the suggestion dropdown */
-.suggestion-container {
-	position: absolute;
-	background-color: var(--background-secondary);
-	border: 1px solid var(--background-modifier-border);
-	border-radius: 4px;
-	margin-top: 2px; /* Spacing below the input */
-	width: calc(100% - 20px); /* Adjust width as needed, considering padding */
-	max-height: 150px;
-	overflow-y: auto;
-	z-index: 10; /* Ensure it's above other elements */
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.suggestion-item {
-	padding: 8px 12px;
-	cursor: pointer;
-	font-size: 0.9em;
-}
-
-.suggestion-item:hover {
-	background-color: var(--background-modifier-hover);
+	/*color: var(--text-normal); /* Default text color */
+	opacity: 0.8; /* Slightly fade out unchanged lines*/
 }
