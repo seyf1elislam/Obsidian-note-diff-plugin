@@ -1,41 +1,20 @@
-import { MarkdownView, Menu, Notice, Plugin, TFile } from "obsidian";
-import { DiffModal } from "./DiffModal"; // Adjust path if needed
+import { Menu, Notice, Plugin, TFile } from "obsidian";
+import { DiffModal } from "./DiffModal";
 import {
 	NoteDiffSettings,
 	DEFAULT_SETTINGS,
-	MarkdownDiffSettingsTab,
+	// MarkdownDiffSettingsTab,
 } from "./settings";
 
 export default class NoteDiffPlugin extends Plugin {
 	settings: NoteDiffSettings;
-	// Variable to store the first file selected via context menu
 	fileToCompare: TFile | null = null;
 
 	async onload() {
 		await this.loadSettings();
 
 		console.log("Loading Markdown File Diff plugin...");
-
-		// --- Command Palette Command (Original) ---
-		this.addCommand({
-			id: "diff-current-file",
-			name: "Diff Current File with Another File",
-			checkCallback: (checking: boolean) => {
-				const markdownView =
-					this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (markdownView && markdownView.file) {
-					if (!checking) {
-						// Open the modal, passing only the active file.
-						// The modal will prompt for the second file.
-						new DiffModal(this.app, markdownView.file).open();
-					}
-					return true;
-				}
-				return false;
-			},
-		});
-
-		// --- File Context Menu Event ---
+		//! --- File Context Menu Event ---
 		this.registerEvent(
 			this.app.workspace.on("file-menu", (menu: Menu, file: TFile) => {
 				// Ensure it's a markdown file before adding options
@@ -43,7 +22,7 @@ export default class NoteDiffPlugin extends Plugin {
 					return;
 				}
 
-				// Option 1: Select the first file for comparison
+				//? Option 1: Select the first file for comparison
 				menu.addItem((item) => {
 					item.setTitle("Select for compare")
 						.setIcon("copy") // Example icon, choose a relevant one
@@ -55,7 +34,7 @@ export default class NoteDiffPlugin extends Plugin {
 						});
 				});
 
-				// Option 2: Compare the current file with the previously selected one
+				//? Option 2: Compare the current file with the previously selected one
 				if (
 					this.fileToCompare &&
 					this.fileToCompare.path !== file.path
@@ -65,7 +44,7 @@ export default class NoteDiffPlugin extends Plugin {
 						item.setTitle(
 							`Compare with: ${this.fileToCompare?.basename}`
 						)
-							.setIcon("diff") // Example icon
+							.setIcon("diff")
 							.onClick(async () => {
 								if (this.fileToCompare) {
 									// Open the modal, passing both files directly.
@@ -74,7 +53,7 @@ export default class NoteDiffPlugin extends Plugin {
 										this.fileToCompare,
 										file
 									).open();
-									// Optional: Reset selection after comparison?
+									//  Reset selection after comparison?
 									// this.fileToCompare = null;
 								} else {
 									new Notice(
@@ -87,8 +66,8 @@ export default class NoteDiffPlugin extends Plugin {
 			})
 		);
 
-		// Optional Settings Tab
-		this.addSettingTab(new MarkdownDiffSettingsTab(this));
+		//  Settings Tab
+		// this.addSettingTab(new MarkdownDiffSettingsTab(this));
 
 		console.log("Markdown File Diff plugin loaded.");
 	}
@@ -110,11 +89,3 @@ export default class NoteDiffPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
-
-// Example Settings Tab (Optional - Keep commented out if not needed)
-/*
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MarkdownDiffPlugin;
-	// ... (constructor and display method as before) ...
-}
-*/
